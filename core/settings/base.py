@@ -24,6 +24,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 # Application definition
 LOCAL_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,7 +37,21 @@ LOCAL_APPS = [
     'products',
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    # 'django_ckeditor_5',
+    'ckeditor',
+    'mptt',
+
+]
+#
+# CKEDITOR_5_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         'skin': 'moono-lisa',
+#         'height': 600,
+#         # boshqa sozlamalar
+#     },
+# }
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
 
