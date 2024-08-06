@@ -1,8 +1,11 @@
 import environ
 from pathlib import Path
 
+# import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
@@ -38,9 +41,8 @@ LOCAL_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    # 'django_ckeditor_5',
     'ckeditor',
-    'mptt',
+    'rest_framework',
 
 ]
 #
@@ -85,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -99,7 +100,6 @@ DATABASES = {
         'PORT': env.str('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -119,26 +119,36 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
 USE_TZ = True
 
-
-#STATIC URLS
+# STATIC URLS
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/ 'static'
-#Media Urls
+STATIC_ROOT = BASE_DIR / 'static'
+# Media Urls
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bekmuhammadmamadiyev90@gmail.com'
+EMAIL_HOST_PASSWORD = 'oltzhybkuildrxzd'
+
+
+OTP_CODE_ACTIVATION_TIME = 2 # in minutes

@@ -3,11 +3,11 @@ from django.utils.translation import gettext_lazy as _
 from common.models import Media
 from ckeditor.fields import RichTextField
 from products.utitls import validate_rating
-from mptt.models import MPTTModel, TreeForeignKey
 
-class Category(MPTTModel):
-    name = models.CharField(_("Name"),max_length=255)
-    parent = TreeForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
+
+class Category(models.Model):
+    name = models.CharField(_("Name"), max_length=255)
+    parent = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     image = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -18,12 +18,9 @@ class Category(MPTTModel):
         verbose_name_plural = _("Categories")
 
 
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
 class Product(models.Model):
     name = models.CharField(_("Name"), max_length=255)
-    price = models.FloatField(_("Price"),)
+    price = models.FloatField(_("Price"), )
     short_description = models.TextField(_("short Description"))
     description = models.TextField(_("Description"))
     quantity = models.IntegerField(_("Quantity"))
@@ -35,6 +32,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
 
 class ProductColour(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="colours")
@@ -51,24 +49,27 @@ class ProductSize(models.Model):
     def __str__(self):
         return f"Product {self.product.id} -Size {self.value}"
 
+
 class ProductReview(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     title = models.CharField(_("title"), max_length=255)
     review = models.TextField(_("review"))
-    rank = models.IntegerField(_("rank"), validators=[])
+    rank = models.IntegerField(_("rank"), validators=[validate_rating])
     email = models.EmailField(_("email"))
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
     def __str__(self):
         return f"Product: {self.product.id}|User: {self.user.id}"
 
+
 class Wishlist(models.Model):
-    poroduct = models.ForeignKey(Product,on_delete=models.CASCADE, related_name= 'wishlists')
-    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name = "wishlists")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='wishlists')
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="wishlists")
 
     def __str__(self):
         return f"Product: {self.product.id}|User: {self.user.id}"
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
