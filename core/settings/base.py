@@ -23,6 +23,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+HOST = env.str("HOST")
 AUTH_USER_MODEL = "accounts.User"
 
 # Application definition
@@ -141,7 +142,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -150,15 +150,15 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bekmuhammadmamadiyev90@gmail.com'
 EMAIL_HOST_PASSWORD = 'oltzhybkuildrxzd'
 
-
-OTP_CODE_ACTIVATION_TIME = 5 # in minutes
-
+OTP_CODE_ACTIVATION_TIME = 5  # in minutes
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
 
 }
 
