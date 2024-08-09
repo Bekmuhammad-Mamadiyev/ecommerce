@@ -16,6 +16,14 @@ class User(AbstractUser):
         'unique': _("A user with that email already exists."), },
                                 null=True, blank=True
                                 )
+    is_active = models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
     USERNAME_FIELD = 'email'
     objects = UserManager()
     REQUIRED_FIELDS = []
@@ -28,7 +36,7 @@ class User(AbstractUser):
         verbose_name_plural = _("Users")
 
 
-class VerificationOtp(models.Model):
+class VerifictionOtp(models.Model):
     class VerificationType(models.TextChoices):
         REGISTER = "register", _("Register")
         RESET_PASSWORD = "reset_password", _("Reset password")
@@ -37,6 +45,7 @@ class VerificationOtp(models.Model):
     code = models.IntegerField(_("Otp code"), validators=[check_otp_code])
     type = models.CharField(_("Verification Type"), max_length=60, choices=VerificationType.choices)
     expires_in = models.DateTimeField(_("Expires In"), )
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.user.email} - code: {self.code}"

@@ -43,7 +43,7 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     'ckeditor',
     'rest_framework',
-
+    'drf_spectacular',
 ]
 #
 # CKEDITOR_5_CONFIGS = {
@@ -151,4 +151,21 @@ EMAIL_HOST_USER = 'bekmuhammadmamadiyev90@gmail.com'
 EMAIL_HOST_PASSWORD = 'oltzhybkuildrxzd'
 
 
-OTP_CODE_ACTIVATION_TIME = 2 # in minutes
+OTP_CODE_ACTIVATION_TIME = 5 # in minutes
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Ecommerce Documentation',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

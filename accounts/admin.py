@@ -9,7 +9,7 @@ admin.site.unregister(Group)
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    list_display = ("email", "email", "first_name", "last_name", "is_staff")
+    list_display = ("email", "email", "first_name", "last_name", "is_active",'is_superuser')
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ('email',"first_name", "last_name", "email")
 
@@ -41,7 +41,7 @@ class UserAdmin(UserAdmin):
     )
 
 
-@admin.register(VerificationOtp)
+@admin.register(VerifictionOtp)
 class VerificationOtpAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'code', 'type', 'expires_in')
 
